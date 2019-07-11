@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 234593475}
   - component: {fileID: 234593474}
   m_Layer: 0
-  m_Name: Cylinder
+  m_Name: Monster4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -393,8 +393,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 1463021602}
   - {fileID: 2110518998}
+  - {fileID: 1463021602}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -582,7 +582,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 794157924}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -644,7 +644,7 @@ GameObject:
   - component: {fileID: 1639159087}
   - component: {fileID: 1639159086}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: Monster3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -827,7 +827,7 @@ GameObject:
   - component: {fileID: 1966974991}
   - component: {fileID: 1966974990}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Monster2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -916,7 +916,7 @@ GameObject:
   - component: {fileID: 2110518998}
   - component: {fileID: 2110519000}
   - component: {fileID: 2110518999}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -935,7 +935,7 @@ RectTransform:
   m_LocalScale: {x: 0.95, y: 0.3, z: 1}
   m_Children: []
   m_Father: {fileID: 794157924}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
