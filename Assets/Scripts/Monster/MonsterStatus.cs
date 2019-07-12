@@ -13,13 +13,16 @@ namespace BattleArenaMock.Scripts.Monster
         public int Strength{ get; private set; }
         // 防御力
         public int Defence{ get; private set; }
+        // すばやさ
+        public int Agility{ get; private set; }
 
-        public MonsterStatusGroup(int hp, int mp, int strength, int defence)
+        public MonsterStatusGroup(int hp, int mp, int strength, int defence, int agility)
         {
             HP = hp;
             MP = mp;
             Strength = strength;
             Defence = defence;
+            Agility = agility;
         }
     }
     public class MonsterStatus : MonoBehaviour
@@ -29,6 +32,7 @@ namespace BattleArenaMock.Scripts.Monster
         [SerializeField] private int mp;
         [SerializeField] private int strength;
         [SerializeField] private int defence;
+        [SerializeField] private int agility;
         // モンスターに必要最低限のデータ構造体
         private MonsterStatusGroup monsStatus;
         public MonsterStatusGroup MonsterStatusGroupProp{ get; private set; }
@@ -38,7 +42,7 @@ namespace BattleArenaMock.Scripts.Monster
         /// </summary>
         void Start()
         {
-            MonsterStatusGroupProp = new MonsterStatusGroup(hp, mp, strength, defence);
+            MonsterStatusGroupProp = new MonsterStatusGroup(hp, mp, strength, defence, agility);
         }
     }
 }
