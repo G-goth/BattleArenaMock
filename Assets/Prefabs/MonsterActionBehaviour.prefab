@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2749827657385807866}
   - component: {fileID: 5173161102552706538}
+  - component: {fileID: -6711147299139409589}
   m_Layer: 0
   m_Name: MonsterActionBehaviour
   m_TagString: Untagged
@@ -41,5 +42,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5225d765f669d4daa97654f16289c855, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-6711147299139409589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4899216850976867546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ea3e661768a4cb3bbe7f0cb117f378, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
