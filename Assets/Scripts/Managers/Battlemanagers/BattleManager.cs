@@ -16,5 +16,8 @@ namespace BattleArenaMock.Assets.Scripts.Managers.Battlemanagers
         {
             Debug.Log("Monster1 MP is " + monsStatus.MonsterStatusGroupProp.HP);
         }
+
+        // モンスターの死亡処理
+        // モンスターのすばやさ順の行動処理
     }
 }

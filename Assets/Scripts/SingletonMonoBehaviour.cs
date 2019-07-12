@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace ProjectNJSJ.Assets.Scripts
+namespace BattleArenaMock.Assets.Scripts
 {
     public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : SingletonMonoBehaviour<T>
     {

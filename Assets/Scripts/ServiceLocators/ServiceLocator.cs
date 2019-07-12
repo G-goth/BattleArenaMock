@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ProjectNJSJ.Assets.Scripts.ServiceLocators
+namespace BattleArenaMock.Assets.Scripts.ServiceLocators
 {
     public class ServiceLocator
     {
