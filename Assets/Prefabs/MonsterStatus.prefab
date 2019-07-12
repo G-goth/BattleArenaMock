@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3200112626221580965}
   m_Layer: 0
   m_Name: MonsterStatus
-  m_TagString: Untagged
+  m_TagString: MonsterStatus
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43,7 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af98baba0ccae49ac864d4cbe2941883, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
+  hp: 0
   mp: 0
-  strength: 45
-  defence: 40
+  strength: 0
+  defence: 0
+  agility: 0

@@ -7,7 +7,7 @@ namespace BattleArenaMock.Assets.Scripts.MonsterProviders
         // モンスター・通常攻撃
         public void MonsterLaunchAttack()
         {
-            Debug.Log("Normal Attack!!");
+            // Debug.Log("Normal Attack!!");
         }
         // モンスター・魔法
         public void MonsterUseMagic()

@@ -28,14 +28,15 @@ namespace BattleArenaMock.Scripts.Monster
     public class MonsterStatus : MonoBehaviour
     {
         // モンスター関連
-        [SerializeField] private int hp;
-        [SerializeField] private int mp;
-        [SerializeField] private int strength;
-        [SerializeField] private int defence;
-        [SerializeField] private int agility;
+        [SerializeField] private int hp = default;
+        [SerializeField] private int mp = default;
+        [SerializeField] private int strength = default;
+        [SerializeField] private int defence = default;
+        [SerializeField] private int agility = default;
         // モンスターに必要最低限のデータ構造体
         private MonsterStatusGroup monsStatus;
         public MonsterStatusGroup MonsterStatusGroupProp{ get; private set; }
+        
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
         /// any of the Update methods is called the first time.
