@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UniRx;
+using UniRx.Triggers;
 
 namespace BattleArenaMock.Scripts.Monster
 {
@@ -27,7 +28,7 @@ namespace BattleArenaMock.Scripts.Monster
     }
     public class MonsterStatus : MonoBehaviour
     {
-        // モンスター関連
+        // モンスターステータス関連
         [SerializeField] private int hp = default;
         [SerializeField] private int mp = default;
         [SerializeField] private int strength = default;
@@ -44,6 +45,14 @@ namespace BattleArenaMock.Scripts.Monster
         void Start()
         {
             MonsterStatusGroupProp = new MonsterStatusGroup(hp, mp, strength, defence, agility);
+
+            // ヒエラルキーからのステータスの変更時に変更のたびに呼ばれるように
+            var checkChangeStatusUpdate = this.UpdateAsObservable()
+                .Select(_ => hp | mp | strength | defence | agility)
+                .DistinctUntilChanged()
+                .Subscribe(_=> {
+                    MonsterStatusGroupProp = new MonsterStatusGroup(hp, mp, strength, defence, agility);
+                });
         }
 
         // データを更新して新たに構造体を返すメソッド
@@ -51,6 +60,11 @@ namespace BattleArenaMock.Scripts.Monster
         {
             MonsterStatusGroupProp = new MonsterStatusGroup(hp, mp, strength, defence, agility);
         }
+        public void UpdateMonsterStatusStruct(int hp, int mp, int strength, int defence, int agility)
+        {
+            MonsterStatusGroupProp = new MonsterStatusGroup(hp, mp, strength, defence, agility);
+        }
+
         // MonsterStatusGroup構造体の取得
         public MonsterStatusGroup GetMonsterStatusGroup()
         {

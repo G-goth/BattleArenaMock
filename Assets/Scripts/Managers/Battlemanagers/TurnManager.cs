@@ -1,9 +1,4 @@
-using System.Linq;
-using System.Collections.Generic;
 using UnityEngine;
-using UniRx;
-using UniRx.Triggers;
-using BattleArenaMock.Scripts.Monster;
 
 namespace BattleArenaMock.Assets.Scripts.Managers.Battlemanagers
 {
