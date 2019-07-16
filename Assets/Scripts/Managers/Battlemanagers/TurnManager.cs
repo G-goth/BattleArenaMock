@@ -19,9 +19,9 @@ namespace BattleArenaMock.Assets.Scripts.Managers.Battlemanagers
         void Start()
         {
             monsterObjectList.AddRange(GameObject.FindGameObjectsWithTag("Monster").OrderBy(go => go.name));
-            monsterStatusList.AddRange(GameObject.FindGameObjectsWithTag("MonsterStatus").OrderBy(go => go.name));
-            foreach(var status in monsterStatusList)
+            foreach(var monstarStatus in monsterObjectList)
             {
+                Debug.Log(monstarStatus.GetComponentInChildren<MonsterStatus>().MonsterStatusGroupProp.HP);
             }
         }
     }
