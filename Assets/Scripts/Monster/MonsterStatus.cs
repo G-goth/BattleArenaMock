@@ -45,5 +45,16 @@ namespace BattleArenaMock.Scripts.Monster
         {
             MonsterStatusGroupProp = new MonsterStatusGroup(hp, mp, strength, defence, agility);
         }
+
+        // データを更新して新たに構造体を返すメソッド
+        public void UpdateMonsterStatusStruct()
+        {
+            MonsterStatusGroupProp = new MonsterStatusGroup(hp, mp, strength, defence, agility);
+        }
+        // MonsterStatusGroup構造体の取得
+        public MonsterStatusGroup GetMonsterStatusGroup()
+        {
+            return MonsterStatusGroupProp;
+        }
     }
 }
