@@ -10,7 +10,6 @@ namespace BattleArenaMock.Assets.Scripts.Managers.Battlemanagers
     public class BattleManager : MonoBehaviour
     {
         // 闘技場出場モンスター系
-        [SerializeField] private MonsterStatus monsStatus = default;
         private List<GameObject> monsterObjectList = new List<GameObject>();
         private List<MonsterStatus> status = new List<MonsterStatus>();
         private List<int> agilityList = new List<int>();
@@ -21,8 +20,6 @@ namespace BattleArenaMock.Assets.Scripts.Managers.Battlemanagers
         /// </summary>
         void Start()
         {
-            // MonsterStatusクラスの取得
-            monsStatus = GetComponent<MonsterStatus>();
             // 各ダミーのモンスターデータからステータスクラスを取得
             monsterObjectList.AddRange(GameObject.FindGameObjectsWithTag("Monster").OrderBy(go => go.name));
             foreach(var monstarStatus in monsterObjectList)
@@ -31,7 +28,7 @@ namespace BattleArenaMock.Assets.Scripts.Managers.Battlemanagers
             }
         }
         // モンスターの死亡処理
-        // モンスターのすばやさ順にリストに追加する
+        // モンスターのすばやさ順にモンスターの振る舞いクラスごとリストに追加する
         private void AgilityListAddingStatus()
         {
         }
