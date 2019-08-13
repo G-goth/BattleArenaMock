@@ -11,8 +11,15 @@ namespace BattleArenaMock.Assets.Scripts.Managers.Battlemanagers
     {
         // 闘技場出場モンスター系
         private List<GameObject> monsterObjectList = new List<GameObject>();
+        private Dictionary<string, MonsterStatusGroup> monsterObjectMap = new Dictionary<string, MonsterStatusGroup>();
         private List<MonsterStatus> status = new List<MonsterStatus>();
-        private List<int> agilityList = new List<int>();
+
+        // プロパティ
+        public List<GameObject> MonsterObjectListProp
+        {
+            get{ return monsterObjectList; }
+            private set{ monsterObjectList = value; }
+        }
 
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
@@ -26,11 +33,25 @@ namespace BattleArenaMock.Assets.Scripts.Managers.Battlemanagers
             {
                 status.Add(monstarStatus.GetComponentInChildren<MonsterStatus>());
             }
+            
+            // プロパティへ代入
+            MonsterObjectListProp = monsterObjectList;
         }
         // モンスターの死亡処理
         // モンスターのすばやさ順にモンスターの振る舞いクラスごとリストに追加する
-        private void AgilityListAddingStatus()
+        private List<int> AgilityListAddingStatus()
         {
+            List<int> agilityList = new List<int>();
+            Dictionary<string, int> agilityMap = new Dictionary<string, int>();
+            foreach(var agility in status)
+            {
+                agilityList.Add(agility.MonsterStatusGroupProp.Agility);
+            }
+            
+            agilityList.Sort();
+            agilityList.Reverse();
+
+            return agilityList;
         }
         // モンスターのすばやさ順の行動処理 すばやさ順にモンスター行動のメソッドを呼ぶ感じにしたい
     }

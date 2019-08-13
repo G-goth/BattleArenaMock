@@ -1351,18 +1351,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1829694535 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3200112626221580965, guid: 7883bcade041e40e0894ddef5821eb80,
-    type: 3}
-  m_PrefabInstance: {fileID: 4724012427091460916}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af98baba0ccae49ac864d4cbe2941883, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1841075780
 GameObject:
   m_ObjectHideFlags: 0
@@ -1375,6 +1363,7 @@ GameObject:
   - component: {fileID: 1841075782}
   - component: {fileID: 1841075783}
   - component: {fileID: 1841075784}
+  - component: {fileID: 1841075785}
   m_Layer: 0
   m_Name: BattleScriptAttachObject
   m_TagString: Untagged
@@ -1408,7 +1397,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e483c34ab7324f6db1a9a60f0c730ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsStatus: {fileID: 1829694535}
 --- !u!114 &1841075783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1433,6 +1421,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbe606bc11c7344fdbf532dcdc86c3d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1841075785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841075780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72de702cab5cd403197c2eae63ca5f5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterObject:
+  - {fileID: 1692221146}
+  - {fileID: 1966974989}
+  - {fileID: 1639159085}
+  - {fileID: 234593473}
 --- !u!1 &1966974989
 GameObject:
   m_ObjectHideFlags: 0

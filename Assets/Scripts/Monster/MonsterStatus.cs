@@ -16,6 +16,11 @@ namespace BattleArenaMock.Scripts.Monster
         public int Defence{ get; private set; }
         // すばやさ
         public int Agility{ get; private set; }
+        // 総合値
+        public int TotalScore
+        {
+            get { return HP + MP + Strength + Defence + Agility; }
+        }
 
         public MonsterStatusGroup(int hp, int mp, int strength, int defence, int agility)
         {
