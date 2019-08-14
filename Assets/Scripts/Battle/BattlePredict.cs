@@ -1,17 +1,18 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UniRx;
+using UniRx.Triggers;
 using BattleArenaMock.Scripts.Monster;
 using BattleArenaMock.Assets.Scripts.Managers.Battlemanagers;
 
 namespace BattleArenaMock.Assets.Scripts.Battle
 {
-    public class BattlePredict : MonoBehaviour
+    public class BattlePredict : MonoBehaviour, IBattlePredictReciever
     {
-        // モンスターのリスト
-        [SerializeField] private List<GameObject> monsterObject = new List<GameObject>();
         private BattleManager battleManager;
+        private int[] statusArray = new int[3];
         
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
@@ -21,20 +22,18 @@ namespace BattleArenaMock.Assets.Scripts.Battle
         {
             // モンスターのGameObjectを取得
             battleManager = GetComponent<BattleManager>();
-            var statusArray = battleManager.MonsterObjectListProp.Select(obj => obj.GetComponentInChildren<MonsterStatus>().GetMonsterStatusGroup().TotalScore).ToArray();
-            // ReturnTotalScoreArray(statusArray, statusArray.Sum());
-            for(int i = 0; i < 20; ++i)
-            {
-                TestRangeMethod(statusArray, statusArray.Sum());
-            }
+            statusArray = battleManager.MonsterObjectListProp.Select(obj => obj.GetComponentInChildren<MonsterStatus>().GetMonsterStatusGroup().TotalScore).ToArray();
         }
 
-        private float[] ReturnTotalScoreArray(int[] totalScoreArray, int sum)
+        public void StartBattleStream()
         {
-            var test = Mathf.RoundToInt(totalScoreArray.Select(totalScore => (float)totalScore / (float)sum * 100).Sum());
-            return totalScoreArray.Select(totalScore => (float)totalScore / (float)sum).ToArray();
+            var battleStream = this.UpdateAsObservable()
+                .Take(1000)
+                .Subscribe(_ => {
+                    JackPotRangeDisplay(statusArray, statusArray.Sum());
+                });
         }
-        private void TestRangeMethod(int[] totalScoreArray, int sum)
+        private void JackPotRangeDisplay(int[] totalScoreArray, int sum)
         {
             int min = 0, max = 0;
             Dictionary<string, (int min, int max)> testMap = new Dictionary<string, (int min, int max)>();
@@ -56,6 +55,14 @@ namespace BattleArenaMock.Assets.Scripts.Battle
                     break;
                 }
             }
+        }
+        private void PostMessage()
+        {
+            ExecuteEvents.Execute<IBattleManagerReciever>(
+                target: gameObject,
+                eventData: null,
+                functor: (reciever, eventData) => reciever.PostMessageOnRecieve()
+            );
         }
     }
 }

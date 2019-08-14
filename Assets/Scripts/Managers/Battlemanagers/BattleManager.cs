@@ -7,7 +7,7 @@ using BattleArenaMock.Scripts.Monster;
 
 namespace BattleArenaMock.Assets.Scripts.Managers.Battlemanagers
 {
-    public class BattleManager : MonoBehaviour
+    public class BattleManager : MonoBehaviour, IBattleManagerReciever
     {
         // 闘技場出場モンスター系
         private List<GameObject> monsterObjectList = new List<GameObject>();
@@ -54,5 +54,11 @@ namespace BattleArenaMock.Assets.Scripts.Managers.Battlemanagers
             return agilityList;
         }
         // モンスターのすばやさ順の行動処理 すばやさ順にモンスター行動のメソッドを呼ぶ感じにしたい
+
+        // メッセージの受け口(仮)
+        public void PostMessageOnRecieve()
+        {
+            Debug.Log("PostMessageOnRecieve");
+        }
     }
 }
