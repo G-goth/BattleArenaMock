@@ -26,7 +26,8 @@ namespace BattleArenaMock.Assets.Scripts.Battle
 
         public string PredictMonsterNameProp
         {
-            get{ return JackPotRangeDisplay(statusArray, statusArray.Sum()); }
+            // get{ return JackPotRangeDisplay(statusArray, statusArray.Sum()); }
+            get{ return WeightedLotteryMonsterName(statusArray); }
         }
         private string JackPotRangeDisplay(int[] totalScoreArray, int sum)
         {
@@ -49,6 +50,24 @@ namespace BattleArenaMock.Assets.Scripts.Battle
                 {
                     monsterName = item.Key;
                 }
+            }
+            return monsterName;
+        }
+        private string WeightedLotteryMonsterName(int[] totalScoreArray)
+        {
+            string monsterName = "";
+            string[] monsterNameArray = new string[]{"Monster1", "Monster2", "Monster3", "Monster4"};
+            var sum = totalScoreArray.Sum();
+            var weightArray = totalScoreArray.Select(weight => (int)(((float)weight / sum) * 100)).OrderBy(weight => weight).ToArray();
+            var rand = (int)Random.Range(0.0f, weightArray.Sum());
+            for(int i = 0; i < totalScoreArray.Length; ++i)
+            {
+                if(rand < weightArray[i])
+                {
+                    monsterName = monsterNameArray[i];
+                    break;
+                }
+                rand -= weightArray[i];
             }
             return monsterName;
         }
