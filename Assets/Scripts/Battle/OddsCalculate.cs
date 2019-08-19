@@ -66,6 +66,8 @@ namespace BattleArenaMock.Assets.Scripts.Battle
             }
         }
 
+        // 払い戻しコインの取得
+        public int RefundAmountProp{ get; set; }
         // オッズに基づいた払い戻し金額の計算
         private void RefundAmount(Dictionary<string, float> oddsMap, string monsterName)
         {
@@ -78,6 +80,7 @@ namespace BattleArenaMock.Assets.Scripts.Battle
                 else
                 {
                     float answer = BettingCoinProp * hit.Value;
+                    RefundAmountProp = Mathf.RoundToInt(answer);
                     wallet.CoinAmountProp += Mathf.RoundToInt(answer);
                 }
             }

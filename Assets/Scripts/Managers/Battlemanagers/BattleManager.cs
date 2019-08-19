@@ -63,7 +63,6 @@ namespace BattleArenaMock.Assets.Scripts.Managers.Battlemanagers
             return agilityList;
         }
         // モンスターのすばやさ順の行動処理 すばやさ順にモンスター行動のメソッドを呼ぶ感じにしたい
-
         // メッセージの受け口(仮)
         public void PostMessageOnRecieve()
         {
