@@ -7,6 +7,8 @@ TagManager:
   - Monster
   - MonsterStatus
   - OddsText
+  - Canvas
+  - OddsUIs
   layers:
   - Default
   - TransparentFX

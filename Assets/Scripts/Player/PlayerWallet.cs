@@ -19,5 +19,13 @@ namespace BattleArenaMock.Assets.Scripts.Player
         {
             CoinAmountProp = coin;
         }
+        private void CoinAddition(int coin)
+        {
+            CoinAmountProp += coin;
+        }
+        private void CoinSubtraction(int coin)
+        {
+            CoinAmountProp -= coin;
+        }
     }
 }

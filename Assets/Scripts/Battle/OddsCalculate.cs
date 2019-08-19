@@ -1,10 +1,13 @@
 using System.Linq;
 using System.Collections.Generic;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.UI;
 using BattleArenaMock.Scripts.Monster;
 using BattleArenaMock.Assets.Scripts.Player;
 using BattleArenaMock.Assets.Scripts.Managers.Battlemanagers;
+using BattleArenaMock.Assets.Scripts.UI;
 
 namespace BattleArenaMock.Assets.Scripts.Battle
 {
@@ -17,6 +20,7 @@ namespace BattleArenaMock.Assets.Scripts.Battle
         private UtilityMethods utility = new UtilityMethods();
         private BattlePredict predict;
         private PlayerWallet wallet;
+        private UIBehaviour uiBehaviour;
 
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
@@ -42,30 +46,41 @@ namespace BattleArenaMock.Assets.Scripts.Battle
             OddsTextOutPut(OddsCalculating(statusArray));
         }
 
+        public int BettingCoinProp{ get; set; }
         public void Ignition(string monsterName)
         {
             // オッズの表示の更新
             OddsTextOutPut(OddsCalculating(statusArray));
             // モンスターの名とオッズの組を作る
             var oddsMap = OddsCoefficientMap(OddsCalculating(statusArray));
-            // 当落の判定
+            // 当落の判定(計算もここでしちゃってるから別に分けたい)
             if(!predict.PredictMonsterNameProp.Contains(monsterName))
             {
                 // 何もしない
             }
             else
             {
-                foreach(var hit in oddsMap)
+                RefundAmount(oddsMap, monsterName);
+            }
+        }
+
+        // オッズに基づいた払い戻し金額の計算
+        private void RefundAmount(Dictionary<string, float> oddsMap, string monsterName)
+        {
+            foreach(var hit in oddsMap)
+            {
+                if(hit.Key != monsterName)
                 {
-                    if(hit.Key == monsterName)
-                    {
-                        float temp = wallet.CoinAmountProp;
-                        float answer = temp * hit.Value;
-                        wallet.CoinAmountProp = Mathf.RoundToInt(answer);
-                    }
+                    // 何もしない
+                }
+                else
+                {
+                    float answer = BettingCoinProp * hit.Value;
+                    wallet.CoinAmountProp += Mathf.RoundToInt(answer);
                 }
             }
         }
+        // オッズの算出
         private List<float> OddsCalculating(int[] statusArray)
         {
             float oddsCoefficient = 25.0f;
@@ -101,6 +116,7 @@ namespace BattleArenaMock.Assets.Scripts.Battle
             return oddsList;
         }
 
+        // オッズとモンスター名の組を作る
         private Dictionary<string, float> OddsCoefficientMap(List<float> oddsList)
         {
             int number = 1;
@@ -112,6 +128,8 @@ namespace BattleArenaMock.Assets.Scripts.Battle
             }
             return oddsMap;
         }
+
+        // 計算されたオッズの表示
         private void OddsTextOutPut(List<float> oddsList)
         {
             for(int i = 0; i < oddsTextList.Count; ++i)
