@@ -46,8 +46,7 @@ namespace BattleArenaMock.Assets.Scripts.UI
                 .Subscribe(_ => {
                     UpdateCoinAmount();
                     });
-
-            dropDownBetting.ClearOptions();
+                        
             dropDownBetting.AddOptions(Enumerable.Range(1, BetCoinLimit).Select(num => num.ToString()).ToList());
         }
 

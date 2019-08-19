@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UniRx;
-using UniRx.Triggers;
 using BattleArenaMock.Scripts.Monster;
 using BattleArenaMock.Assets.Scripts.Managers.Battlemanagers;
 

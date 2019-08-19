@@ -1,7 +1,5 @@
 using System.Linq;
 using System.Collections.Generic;
-using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.UI;
 using BattleArenaMock.Scripts.Monster;
@@ -42,6 +40,8 @@ namespace BattleArenaMock.Assets.Scripts.Battle
                 oddsTextList.Add(text.GetComponent<Text>());
             }
 
+            // 初期賭けコイン
+            BettingCoinProp = 1;
             // 初起動の時のオッズ
             OddsTextOutPut(OddsCalculating(statusArray));
         }
