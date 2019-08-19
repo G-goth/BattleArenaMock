@@ -9,7 +9,7 @@ using BattleArenaMock.Assets.Scripts.Managers.Battlemanagers;
 
 namespace BattleArenaMock.Assets.Scripts.Battle
 {
-    public class BattlePredict : MonoBehaviour, IBattlePredictReciever
+    public class BattlePredict : MonoBehaviour
     {
         private BattleManager battleManager;
         private int[] statusArray = new int[3];
@@ -25,16 +25,14 @@ namespace BattleArenaMock.Assets.Scripts.Battle
             statusArray = battleManager.MonsterObjectListProp.Select(obj => obj.GetComponentInChildren<MonsterStatus>().GetMonsterStatusGroup().TotalScore).ToArray();
         }
 
-        public void StartBattleStream()
+
+        public string PredictMonsterNameProp
         {
-            var battleStream = this.UpdateAsObservable()
-                .Take(1000)
-                .Subscribe(_ => {
-                    JackPotRangeDisplay(statusArray, statusArray.Sum());
-                });
+            get{ return JackPotRangeDisplay(statusArray, statusArray.Sum()); }
         }
-        private void JackPotRangeDisplay(int[] totalScoreArray, int sum)
+        private string JackPotRangeDisplay(int[] totalScoreArray, int sum)
         {
+            string monsterName = "";
             int min = 0, max = 0;
             Dictionary<string, (int min, int max)> testMap = new Dictionary<string, (int min, int max)>();
             
@@ -51,10 +49,10 @@ namespace BattleArenaMock.Assets.Scripts.Battle
             {
                 if(item.Value.min < randNum & item.Value.max > randNum)
                 {
-                    Debug.Log(item.Key);
-                    break;
+                    monsterName = item.Key;
                 }
             }
+            return monsterName;
         }
         private void PostMessage()
         {
