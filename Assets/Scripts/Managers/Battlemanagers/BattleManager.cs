@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using BattleArenaMock.Scripts.Monster;
 using BattleArenaMock.Assets.Scripts.UI;
 using BattleArenaMock.Assets.Scripts.Battle;
@@ -11,6 +12,7 @@ namespace BattleArenaMock.Assets.Scripts.Managers.Battlemanagers
 {
     public class BattleManager : MonoBehaviour, IBattleManagerReciever
     {
+        [SerializeField] private Text winningText;
         private UIBehaviour battleUI;
         private OddsCalculate oddscalc;
         // 闘技場出場モンスター系
@@ -76,7 +78,9 @@ namespace BattleArenaMock.Assets.Scripts.Managers.Battlemanagers
         // バトルしてる感じのダミー時間のメソッド
         private IEnumerator DammiyBattleTime()
         {
+            winningText.text = "バトル中・・・";
             yield return new WaitForSeconds(3.0f);
+            winningText.text = "";
             battleUI.BattleWinningDisplay(oddscalc.Ignition(MonsterNameProp));
             battleUI.AllGUIActive();
         }
