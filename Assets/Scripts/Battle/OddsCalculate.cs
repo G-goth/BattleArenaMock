@@ -47,7 +47,7 @@ namespace BattleArenaMock.Assets.Scripts.Battle
         }
 
         public int BettingCoinProp{ get; set; }
-        public void Ignition(string monsterName)
+        public bool Ignition(string monsterName)
         {
             // オッズの表示の更新
             OddsTextOutPut(OddsCalculating(statusArray));
@@ -57,10 +57,12 @@ namespace BattleArenaMock.Assets.Scripts.Battle
             if(!predict.PredictMonsterNameProp.Contains(monsterName))
             {
                 // 何もしない
+                return false;
             }
             else
             {
                 RefundAmount(oddsMap, monsterName);
+                return true;
             }
         }
 

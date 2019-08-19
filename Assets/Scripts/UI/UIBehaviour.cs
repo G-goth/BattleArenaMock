@@ -6,6 +6,7 @@ using UniRx;
 using UniRx.Triggers;
 using BattleArenaMock.Assets.Scripts.Battle;
 using BattleArenaMock.Assets.Scripts.Player;
+using BattleArenaMock.Assets.Scripts.Managers.Battlemanagers;
 
 namespace BattleArenaMock.Assets.Scripts.UI
 {
@@ -13,10 +14,12 @@ namespace BattleArenaMock.Assets.Scripts.UI
     {
         [SerializeField] private Canvas battleCanvas;
         [SerializeField] private Text coinAmountText;
+        [SerializeField] private Text winningText;
         [SerializeField] private int BetCoinLimit;
         private OddsCalculate oddscalc;
         private PlayerWallet coinAmount;
         private BattlePredict predict;
+        private BattleManager manager;
         private List<GameObject> bettingButton;
         private Dropdown dropDownBetting;
 
@@ -29,8 +32,12 @@ namespace BattleArenaMock.Assets.Scripts.UI
             coinAmount = GameObject.FindGameObjectWithTag("GameController").GetComponent<PlayerWallet>();
             oddscalc = GameObject.FindGameObjectWithTag("GameController").GetComponent<OddsCalculate>();
             predict = GameObject.FindGameObjectWithTag("GameController").GetComponent<BattlePredict>();
+            manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<BattleManager>();
             bettingButton = GameObject.FindGameObjectsWithTag("OddsUIs").ToList();
             dropDownBetting = GetComponentInChildren<Dropdown>();
+
+            // 結果テキストの初期化
+            winningText.text = "";
 
             // コイン量の変化によってテキストを変更
             var coinAmountText = this.UpdateAsObservable()
@@ -40,26 +47,52 @@ namespace BattleArenaMock.Assets.Scripts.UI
                     UpdateCoinAmount();
                     });
 
-            // bettingButton[0].SetActive(false);
             dropDownBetting.ClearOptions();
             dropDownBetting.AddOptions(Enumerable.Range(1, BetCoinLimit).Select(num => num.ToString()).ToList());
         }
 
         public void ButtonClick(string monsterName)
         {
+            winningText.text = "";
             coinAmount.CoinAmountProp -= (dropDownBetting.value + 1);
-            oddscalc.Ignition(monsterName);
+            manager.MonsterNameProp = monsterName;
+            AllGUIDeactivate();
+            manager.LunchCoroutine();
         }
         public void PulldownMenuChanged()
         {
             oddscalc.BettingCoinProp = dropDownBetting.value + 1;
         }
+        private void AllGUIDeactivate()
+        {
+            foreach(var button in bettingButton)
+            {
+                button.SetActive(false);
+            }
+        }
+        public void AllGUIActive()
+        {
+            foreach(var button in bettingButton)
+            {
+                button.SetActive(true);
+            }
+        }
+        public void BattleWinningDisplay(bool result)
+        {
+            if(!result)
+            {
+                // 負け
+                winningText.text = "負け・・・";
+            }
+            else
+            {
+                // 勝ち
+                winningText.text = "勝ち！！";
+            }
+        }
         private void UpdateCoinAmount()
         {
             coinAmountText.text = "あなたの残りコインは" + coinAmount.CoinAmountProp + "コインです。";
-        }
-        private void AllGUIDeactivate()
-        {
         }
     }
 }

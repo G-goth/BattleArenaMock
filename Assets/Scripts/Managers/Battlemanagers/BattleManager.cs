@@ -1,14 +1,18 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UniRx;
-using UniRx.Triggers;
 using BattleArenaMock.Scripts.Monster;
+using BattleArenaMock.Assets.Scripts.UI;
+using BattleArenaMock.Assets.Scripts.Battle;
 
 namespace BattleArenaMock.Assets.Scripts.Managers.Battlemanagers
 {
     public class BattleManager : MonoBehaviour, IBattleManagerReciever
     {
+        private UIBehaviour battleUI;
+        private OddsCalculate oddscalc;
         // 闘技場出場モンスター系
         private List<GameObject> monsterObjectList = new List<GameObject>();
         private Dictionary<string, MonsterStatusGroup> monsterObjectMap = new Dictionary<string, MonsterStatusGroup>();
@@ -20,6 +24,7 @@ namespace BattleArenaMock.Assets.Scripts.Managers.Battlemanagers
             get{ return monsterObjectList; }
             private set{ monsterObjectList = value; }
         }
+        public string MonsterNameProp{ get; set;}
 
         /// <summary>
         /// Start is called on the frame when a script is enabled just before
@@ -27,6 +32,8 @@ namespace BattleArenaMock.Assets.Scripts.Managers.Battlemanagers
         /// </summary>
         void Start()
         {
+            battleUI = GameObject.FindGameObjectWithTag("Canvas").GetComponent<UIBehaviour>();
+            oddscalc = GameObject.FindGameObjectWithTag("GameController").GetComponent<OddsCalculate>();
             // 各ダミーのモンスターデータからステータスクラスを取得
             monsterObjectList.AddRange(GameObject.FindGameObjectsWithTag("Monster").OrderBy(go => go.name));
             foreach(var monstarStatus in monsterObjectList)
@@ -58,7 +65,20 @@ namespace BattleArenaMock.Assets.Scripts.Managers.Battlemanagers
         // メッセージの受け口(仮)
         public void PostMessageOnRecieve()
         {
-            Debug.Log("PostMessageOnRecieve");
+        }
+        
+        // StartCoroutineをスタートするメソッド
+        public void LunchCoroutine()
+        {
+            string methodName = new Func<IEnumerator>(DammiyBattleTime).Method.Name;
+            StartCoroutine(methodName);
+        }
+        // バトルしてる感じのダミー時間のメソッド
+        private IEnumerator DammiyBattleTime()
+        {
+            yield return new WaitForSeconds(3.0f);
+            battleUI.BattleWinningDisplay(oddscalc.Ignition(MonsterNameProp));
+            battleUI.AllGUIActive();
         }
     }
 }

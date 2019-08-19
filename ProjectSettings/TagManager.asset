@@ -9,6 +9,7 @@ TagManager:
   - OddsText
   - Canvas
   - OddsUIs
+  - WinningText
   layers:
   - Default
   - TransparentFX
