@@ -21,44 +21,56 @@ namespace BattleArenaMock.Assets.Scripts.Battle
             // モンスターのGameObjectを取得
             battleManager = GetComponent<BattleManager>();
             statusArray = battleManager.MonsterObjectListProp.Select(obj => obj.GetComponentInChildren<MonsterStatus>().GetMonsterStatusGroup().TotalScore).ToArray();
+            WeightedOddsCalculation(OddsCalculation(statusArray));
         }
 
 
         public string PredictMonsterNameProp
         {
-            // get{ return JackPotRangeDisplay(statusArray, statusArray.Sum()); }
-            get{ return WeightedLotteryMonsterName(statusArray); }
-        }
-        private string JackPotRangeDisplay(int[] totalScoreArray, int sum)
-        {
-            string monsterName = "";
-            int min = 0, max = 0;
-            Dictionary<string, (int min, int max)> testMap = new Dictionary<string, (int min, int max)>();
-            
-            testMap.Add("Monster1", (0, Mathf.RoundToInt((float)totalScoreArray[0] / (float)sum * 100)));
-            for(int i = 1; i < totalScoreArray.Length; ++i)
+            get
             {
-                min = Mathf.RoundToInt((float)totalScoreArray[i - 1] / (float)sum * 100) + min + 1;
-                max = Mathf.RoundToInt((float)totalScoreArray[i] / (float)sum * 100) + min;
-                testMap.Add("Monster" + (i + 1), (min, max));
+                var weightedOdds = WeightedOddsCalculation(OddsCalculation(statusArray));
+                return WeightedLotteryMonsterName(statusArray, weightedOdds);
             }
-
-            var randNum = Mathf.RoundToInt(UnityEngine.Random.Range(0.0f, max));
-            foreach(KeyValuePair<string, (int min, int max)> item in testMap)
+        }
+        private Dictionary<string, float> OddsCalculation(int[] totalScoreArray)
+        {
+            string[] monsterNameArray = new string[]{"Monster1", "Monster2", "Monster3", "Monster4"};
+            Dictionary<string, float> oddsMap = new Dictionary<string, float>(){{"Monster1", 0.0f}, {"Monster2", 0.0f}, {"Monster3", 0.0f}, {"Monster4", 0.0f}};
+            List<string> keyList = new List<string>(oddsMap.Keys);
+            var max = totalScoreArray.Max();
+            for(int i = 0; i < oddsMap.Keys.Count; ++i)
             {
-                if(item.Value.min < randNum & item.Value.max > randNum)
+                float difference;
+                if(max - totalScoreArray[i] < 1.0f)
                 {
-                    monsterName = item.Key;
+                    oddsMap[keyList[i]] = 1.0f;
+                }
+                else
+                {
+                    difference = (float)(max - totalScoreArray[i]);
+                    oddsMap[keyList[i]] = (float)max / (float)totalScoreArray[i] * difference / 25.0f;
                 }
             }
-            return monsterName;
+            return oddsMap;
         }
-        private string WeightedLotteryMonsterName(int[] totalScoreArray)
+        private Dictionary<string, int> WeightedOddsCalculation(Dictionary<string, float> oddsMap)
+        {
+            Dictionary<string, int> weightedOdds = new Dictionary<string, int>(){{"Monster1", 0}, {"Monster2", 0}, {"Monster3", 0}, {"Monster4", 0}};
+            List<string> keyList = new List<string>(oddsMap.Keys);
+            for(int i = 0; i < oddsMap.Keys.Count; ++i)
+            {
+                weightedOdds[keyList[i]] = (int)(1.0f / oddsMap[keyList[i]] * 100);
+            }
+            return weightedOdds;
+        }
+        private string WeightedLotteryMonsterName(int[] totalScoreArray, Dictionary<string, int> weightedOdds)
         {
             string monsterName = "";
             string[] monsterNameArray = new string[]{"Monster1", "Monster2", "Monster3", "Monster4"};
             var sum = totalScoreArray.Sum();
-            var weightArray = totalScoreArray.Select(weight => (int)(((float)weight / sum) * 100)).OrderBy(weight => weight).ToArray();
+            // var weightArray = totalScoreArray.Select(weight => (int)(((float)weight / sum) * 100)).OrderBy(weight => weight).ToArray();
+            var weightArray = weightedOdds.Select(weight => weight.Value).ToArray();
             var rand = (int)Random.Range(0.0f, weightArray.Sum());
             for(int i = 0; i < totalScoreArray.Length; ++i)
             {
