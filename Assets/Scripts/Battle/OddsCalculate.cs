@@ -44,6 +44,7 @@ namespace BattleArenaMock.Assets.Scripts.Battle
             BettingCoinProp = 1;
             // 初起動の時のオッズ
             OddsTextOutPut(OddsCalculating(statusArray));
+            SimpleOddsCalclation(statusArray);
         }
 
         public int BettingCoinProp{ get; set; }
@@ -85,6 +86,16 @@ namespace BattleArenaMock.Assets.Scripts.Battle
                 }
             }
         }
+        
+        // 単純な能力値の総合値からオッズの計算をする
+        private void SimpleOddsCalclation(int[] totalScoreArray)
+        {
+            int[] stepped = new int[3];
+            string[] monsterNameArray = new string[]{"Monster1", "Monster2", "Monster3", "Monster4"};
+            var sum = totalScoreArray.Sum();
+            var weightArray = totalScoreArray.Select(weight => Mathf.RoundToInt(((float)weight / (float)sum) * 100)).ToArray();
+        }
+
         // オッズの算出
         private List<float> OddsCalculating(int[] statusArray)
         {

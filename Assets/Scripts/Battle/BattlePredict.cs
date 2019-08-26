@@ -24,7 +24,6 @@ namespace BattleArenaMock.Assets.Scripts.Battle
             WeightedOddsCalculation(OddsCalculation(statusArray));
         }
 
-
         public string PredictMonsterNameProp
         {
             get
@@ -69,7 +68,6 @@ namespace BattleArenaMock.Assets.Scripts.Battle
             string monsterName = "";
             string[] monsterNameArray = new string[]{"Monster1", "Monster2", "Monster3", "Monster4"};
             var sum = totalScoreArray.Sum();
-            // var weightArray = totalScoreArray.Select(weight => (int)(((float)weight / sum) * 100)).OrderBy(weight => weight).ToArray();
             var weightArray = weightedOdds.Select(weight => weight.Value).ToArray();
             var rand = (int)Random.Range(0.0f, weightArray.Sum());
             for(int i = 0; i < totalScoreArray.Length; ++i)
@@ -81,15 +79,8 @@ namespace BattleArenaMock.Assets.Scripts.Battle
                 }
                 rand -= weightArray[i];
             }
+            Debug.Log(monsterName);
             return monsterName;
-        }
-        private void PostMessage()
-        {
-            ExecuteEvents.Execute<IBattleManagerReciever>(
-                target: gameObject,
-                eventData: null,
-                functor: (reciever, eventData) => reciever.PostMessageOnRecieve()
-            );
         }
     }
 }
